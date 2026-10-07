@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tel Telecomunicações - Certificação de Serviços</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        tel: {
+                            navy: '#003366',
+                            dark: '#002244',
+                            orange: '#ff6600',
+                            orangeHover: '#e05900',
+                            light: '#f4f6fa',
+                            card: '#ffffff'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f4f6fa; }
+        .counter-btn { transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1); }
+        .counter-btn:active { transform: scale(0.92); }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    </style>
+</head>
+<body class="text-slate-800 min-h-screen flex flex-col justify-between">
+
+    <div id="app" class="flex-grow flex flex-col">
+        <header class="bg-tel-navy text-white shadow-xl sticky top-0 z-50">
+            <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-white p-1.5 rounded-xl flex items-center justify-center shadow-md">
+                        <svg class="w-8 h-8 text-tel-orange" viewBox="0 0 100 100" fill="currentColor">
+                            <path d="M20,75 L40,25 L60,75 L45,75 L40,55 L30,55 L25,75 Z M32,45 L38,45 L35,32 Z" fill="#003366" />
+                            <circle cx="70" cy="30" r="12" fill="#ff6600" />
+                            <path d="M55 30 A 25 25 0 0 1 85 60" stroke="#ff6600" stroke-width="6" fill="none" stroke-linecap="round" />
+                            <path d="M50 20 A 35 35 0 0 1 95 65" stroke="#003366" stroke-width="5" fill="none" stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-black tracking-wider leading-none flex items-center gap-1">
+                            TEL <span class="text-tel-orange font-light">TELECOMUNICAÇÕES</span>
+                        </h1>
+                        <p class="text-[11px] text-slate-300 font-medium tracking-wide">Controle de Certificação de Serviços</p>
+                    </div>
+                </div>
+
+                <div id="userHeaderInfo" class="hidden flex items-center space-x-3">
+                    <div class="text-right hidden sm:block">
+                        <p id="userNameDisplay" class="text-sm font-bold text-white"></p>
+                        <p id="userMatriculaDisplay" class="text-xs text-slate-300"></p>
+                    </div>
+                    <button onclick="logout()" title="Sair da Conta" class="p-2.5 bg-slate-800 hover:bg-slate-700 rounded-xl text-slate-300 hover:text-white transition shadow flex items-center gap-1">
+                        <i data-lucide="log-out" class="w-4 h-4"></i>
+                        <span class="text-xs font-bold hidden md:inline">Sair</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <div id="alertBox" class="hidden fixed top-20 right-4 z-50 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center space-x-3 border-l-4 border-tel-orange">
+            <i data-lucide="info" class="w-5 h-5 text-tel-orange"></i>
+            <span id="alertMessage" class="text-xs font-semibold"></span>
+        </div>
+
+        <div id="authScreen" class="flex-grow flex items-center justify-center p-4">
+            <div class="bg-white rounded-3xl shadow-2xl border border-slate-100 p-8 w-full max-w-md">
+                <div class="text-center mb-8">
+                    <div class="inline-flex p-4 bg-tel-navy/10 text-tel-navy rounded-2xl mb-3">
+                        <i data-lucide="shield-check" class="w-10 h-10 text-tel-orange"></i>
+                    </div>
+                    <h2 class="text-2xl font-black text-tel-navy">Acesso ao Sistema</h2>
+                    <p class="text-slate-500 text-xs mt-1 font-medium">Sua conta de produção na Tel Telecomunicações</p>
+                </div>
+
+                <div class="flex bg-slate-100 p-1 rounded-xl mb-6">
+                    <button id="btnTabLogin" onclick="switchAuthTab('login')" class="flex-1 py-2 text-xs font-bold rounded-lg transition bg-white text-tel-navy shadow">
+                        Entrar
+                    </button>
+                    <button id="btnTabRegister" onclick="switchAuthTab('register')" class="flex-1 py-2 text-xs font-bold text-slate-500 hover:text-slate-800 rounded-lg transition">
+                        Criar Conta
+                    </button>
+                </div>
+
+                <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">Nome de Usuário</label>
+                        <div class="relative">
+                            <i data-lucide="user" class="w-5 h-5 absolute left-3.5 top-3 text-slate-400"></i>
+                            <input type="text" id="loginUsername" required placeholder="Digite seu usuário" class="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-tel-orange focus:border-transparent outline-none text-slate-800 font-medium text-sm">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">Senha</label>
+                        <div class="relative">
+                            <i data-lucide="lock" class="w-5 h-5 absolute left-3.5 top-3 text-slate-400"></i>
+                            <input type="password" id="loginPassword" required placeholder="Digite sua senha" class="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-tel-orange focus:border-transparent outline-none text-slate-800 font-medium text-sm">
+                        </div>
+                    </div>
+                    <button type="submit" class="w-full bg-tel-orange hover:bg-tel-orangeHover text-white font-bold py-3.5 rounded-xl transition shadow-lg shadow-tel-orange/30 flex items-center justify-center space-x-2 mt-6 text-sm">
+                        <span>Acessar Painel</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                </form>
+
+                <form id="registerForm" onsubmit="handleRegister(event)" class="space-y-4 hidden">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">Nome Completo</label>
+                        <div class="relative">
+                            <i data-lucide="user-check" class="w-5 h-5 absolute left-3.5 top-3 text-slate-400"></i>
+                            <input type="text" id="regFullName" required placeholder="Ex: Carlos Silva" class="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-tel-orange focus:border-transparent outline-none text-slate-800 font-medium text-sm">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">Nome de Usuário</label>
+                        <div class="relative">
+                            <i data-lucide="at-sign" class="w-5 h-5 absolute left-3.5 top-3 text-slate-400"></i>
+                            <input type="text" id="regUsername" required placeholder="Ex: csilva" class="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-tel-orange focus:border-transparent outline-none text-slate-800 font-medium text-sm">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">Senha</label>
+                        <div class="relative">
+                            <i data-lucide="key-round" class="w-5 h-5 absolute left-3.5 top-3 text-slate-400"></i>
+                            <input type="password" id="regPassword" required placeholder="Crie uma senha de acesso" class="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-tel-orange focus:border-transparent outline-none text-slate-800 font-medium text-sm">
+                        </div>
+                    </div>
+                    <button type="submit" class="w-full bg-tel-navy hover:bg-tel-dark text-white font-bold py-3.5 rounded-xl transition shadow-lg flex items-center justify-center space-x-2 mt-6 text-sm">
+                        <span>Cadastrar Conta</span>
+                        <i data-lucide="check-circle" class="w-4 h-4"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <main id="mainApp" class="hidden flex-grow max-w-7xl w-full mx-auto p-4 sm:p-6 space-y-6">
+            
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center space-x-2 w-full md:w-auto overflow-x-auto">
+                    <button onclick="switchTab('daily')" id="tabDaily" class="flex-1 md:flex-none px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center space-x-2 transition bg-tel-navy text-white shadow">
+                        <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                        <span>Lançamento Diário</span>
+                    </button>
+                    <button onclick="switchTab('calendar')" id="tabCalendar" class="flex-1 md:flex-none px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-slate-600 hover:bg-slate-100 flex items-center justify-center space-x-2 transition">
+                        <i data-lucide="calendar" class="w-4 h-4"></i>
+                        <span>Calendário & Histórico</span>
+                    </button>
+                    <button onclick="switchTab('analytics')" id="tabAnalytics" class="flex-1 md:flex-none px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-slate-600 hover:bg-slate-100 flex items-center justify-center space-x-2 transition">
+                        <i data-lucide="bar-chart-3" class="w-4 h-4"></i>
+                        <span>Relatórios e Gráficos</span>
+                    </button>
+                </div>
+
+                <div class="flex items-center space-x-3 w-full md:w-auto justify-end border-t md:border-t-0 pt-3 md:pt-0 border-slate-100">
+                    <label class="text-xs font-bold text-slate-500 uppercase tracking-wider hidden sm:block">Data Selecionada:</label>
+                    <div class="relative flex-grow sm:flex-grow-0">
+                        <input type="date" id="selectedDate" onchange="changeDate()" class="w-full bg-slate-100 border border-slate-200 rounded-xl px-4 py-2 text-sm font-bold text-tel-navy outline-none focus:ring-2 focus:ring-tel-orange">
+                    </div>
+                    <button onclick="setToday()" class="px-3 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-bold rounded-xl transition">
+                        Hoje
+                    </button>
+                </div>
+            </div>
+
+            <div id="viewDaily" class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="md:col-span-2 bg-gradient-to-br from-tel-navy to-tel-dark text-white rounded-2xl p-6 shadow-lg relative overflow-hidden flex items-center justify-between">
+                        <div class="z-10">
+                            <p class="text-xs font-medium text-slate-300 uppercase tracking-wider">Somatório do Dia</p>
+                            <h3 id="dailyTotalCount" class="text-5xl font-black mt-2 text-white">0</h3>
+                            <p class="text-xs text-slate-300 mt-2 flex items-center gap-1">
+                                <i data-lucide="clock" class="w-3.5 h-3.5"></i> Total consolidado das certificações do dia
+                            </p>
+                        </div>
+                        <div class="text-white/10 pr-4">
+                            <i data-lucide="check-check" class="w-28 h-28"></i>
+                        </div>
+                    </div>
+
+                    <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Ações do Dia</p>
+                            <p class="text-xs text-slate-500 mt-1">Gerencie os registros do dia selecionado</p>
+                        </div>
+                        <div class="flex items-center gap-2 mt-4">
+                            <button onclick="exportDayReport()" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-1 transition">
+                                <i data-lucide="download" class="w-4 h-4"></i> Baixar Resumo
+                            </button>
+                            <button onclick="clearDayData()" class="flex-1 bg-red-50 hover:bg-red-100 text-red-600 font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-1 transition">
+                                <i data-lucide="trash-2" class="w-4 h-4"></i> Zerar Dia
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+                    <div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-100">
+                        <div>
+                            <h2 class="text-lg font-black text-tel-navy">Contagem por Tipo de Serviço</h2>
+                            <p class="text-xs text-slate-500">Clique nos botões de atalho para adicionar ou remover serviços executados</p>
+                        </div>
+                        <button onclick="toggleCustomServiceModal(true)" class="px-3.5 py-2 bg-tel-navy/10 text-tel-navy hover:bg-tel-navy hover:text-white rounded-xl text-xs font-bold transition flex items-center gap-1.5">
+                            <i data-lucide="plus" class="w-4 h-4"></i> Adicionar Tipo de Serviço
+                        </button>
+                    </div>
+
+                    <div id="servicesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                    </div>
+                </div>
+            </div>
+
+            <div id="viewCalendar" class="hidden space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold text-slate-400 uppercase">Total no Mês</span>
+                            <i data-lucide="calendar-range" class="w-5 h-5 text-tel-navy"></i>
+                        </div>
+                        <h3 id="monthTotalCount" class="text-3xl font-black text-tel-navy mt-2">0</h3>
+                        <p class="text-xs text-slate-500 mt-1">Certificações efetuadas neste mês</p>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold text-slate-400 uppercase">Média Diária</span>
+                            <i data-lucide="trending-up" class="w-5 h-5 text-tel-orange"></i>
+                        </div>
+                        <h3 id="monthAvgCount" class="text-3xl font-black text-tel-orange mt-2">0.0</h3>
+                        <p class="text-xs text-slate-500 mt-1">Média por dia trabalhado</p>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold text-slate-400 uppercase">Serviço Mais Efetuado</span>
+                            <i data-lucide="award" class="w-5 h-5 text-amber-500"></i>
+                        </div>
+                        <h3 id="topServiceDisplay" class="text-lg font-bold text-slate-800 mt-2 truncate">-</h3>
+                        <p class="text-xs text-slate-500 mt-1">Maior volume do mês</p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="flex items-center space-x-3">
+                            <i data-lucide="calendar" class="w-6 h-6 text-tel-orange"></i>
+                            <h2 id="calendarMonthYear" class="text-xl font-bold text-tel-navy capitalize"></h2>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button onclick="changeMonth(-1)" class="p-2 hover:bg-slate-100 rounded-xl transition text-slate-600">
+                                <i data-lucide="chevron-left" class="w-5 h-5"></i>
+                            </button>
+                            <button onclick="changeMonth(1)" class="p-2 hover:bg-slate-100 rounded-xl transition text-slate-600">
+                                <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-7 gap-2 mb-2 text-center text-xs font-bold text-slate-400 uppercase">
+                        <div>Dom</div>
+                        <div>Seg</div>
+                        <div>Ter</div>
+                        <div>Qua</div>
+                        <div>Qui</div>
+                        <div>Sex</div>
+                        <div>Sáb</div>
+                    </div>
+
+                    <div id="calendarGrid" class="grid grid-cols-7 gap-2">
+                    </div>
+                </div>
+            </div>
+
+            <div id="viewAnalytics" class="hidden space-y-6">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
+                    <div class="flex items-center justify-between border-b pb-4">
+                        <div>
+                            <h2 class="text-lg font-bold text-tel-navy">Gráfico de Desempenho Mensal</h2>
+                            <p class="text-xs text-slate-500">Volume total por tipo de serviço no mês selecionado</p>
+                        </div>
+                        <button onclick="exportCSV()" class="px-4 py-2 bg-tel-navy text-white rounded-xl text-xs font-bold hover:bg-tel-dark transition flex items-center gap-1.5 shadow">
+                            <i data-lucide="file-spreadsheet" class="w-4 h-4"></i> Exportar Dados (CSV)
+                        </button>
+                    </div>
+                    <div class="h-72 w-full">
+                        <canvas id="analyticsChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+                    <h3 class="text-md font-bold text-tel-navy mb-4">Resumo Detalhado por Categoria</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-slate-50 text-slate-500 uppercase border-b border-slate-200">
+                                <tr>
+                                    <th class="p-3">Tipo de Serviço</th>
+                                    <th class="p-3">Total do Mês</th>
+                                    <th class="p-3">Participação (%)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="analyticsTableBody" class="divide-y divide-slate-100">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="customModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 space-y-4">
+            <div class="flex items-center justify-between border-b pb-3">
+                <h3 class="text-lg font-bold text-tel-navy">Adicionar Novo Tipo de Serviço</h3>
+                <button onclick="toggleCustomServiceModal(false)" class="text-slate-400 hover:text-slate-600">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <form id="customServiceForm" onsubmit="handleAddCustomService(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Nome do Serviço</label>
+                    <input type="text" id="customName" required placeholder="Ex: Validação de Equipamento" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-tel-orange text-sm font-medium">
+                </div>
+                <div class="flex justify-end space-x-2 pt-2">
+                    <button type="button" onclick="toggleCustomServiceModal(false)" class="px-4 py-2 text-slate-600 text-xs font-bold hover:bg-slate-100 rounded-xl">Cancelar</button>
+                    <button type="submit" class="px-4 py-2 bg-tel-orange text-white text-xs font-bold rounded-xl hover:bg-tel-orangeHover shadow">Salvar Serviço</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const DEFAULT_SERVICES = [
+            { id: 'servico_nuvem', name: 'Serviço Nuvem', icon: 'cloud' },
+            { id: 'ligacao_tecnico', name: 'Ligação Técnico', icon: 'phone-incoming' },
+            { id: 'ligacao_supervisor', name: 'Ligação Supervisor', icon: 'phone-call' }
+        ];
+
+        let currentUser = null;
+        let currentDateStr = new Date().toISOString().split('T')[0];
+        let calendarDate = new Date();
+        let userServices = [];
+        let userRecords = {};
+        let myChart = null;
+
+        window.onload = function() {
+            lucide.createIcons();
+            document.getElementById('selectedDate').value = currentDateStr;
+            checkSession();
+        };
+
+        function showAlert(msg) {
+            const box = document.getElementById('alertBox');
+            document.getElementById('alertMessage').innerText = msg;
+            box.classList.remove('hidden');
+            setTimeout(() => {
+                box.classList.add('hidden');
+            }, 3000);
+        }
+
+        function switchAuthTab(tab) {
+            const btnLogin = document.getElementById('btnTabLogin');
+            const btnReg = document.getElementById('btnTabRegister');
+            const formLogin = document.getElementById('loginForm');
+            const formReg = document.getElementById('registerForm');
+
+            if (tab === 'login') {
+                btnLogin.className = "flex-1 py-2 text-xs font-bold rounded-lg transition bg-white text-tel-navy shadow";
+                btnReg.className = "flex-1 py-2 text-xs font-bold text-slate-500 hover:text-slate-800 rounded-lg transition";
+                formLogin.classList.remove('hidden');
+                formReg.classList.add('hidden');
+            } else {
+                btnReg.className = "flex-1 py-2 text-xs font-bold rounded-lg transition bg-white text-tel-navy shadow";
+                btnLogin.className = "flex-1 py-2 text-xs font-bold text-slate-500 hover:text-slate-800 rounded-lg transition";
+                formReg.classList.remove('hidden');
+                formLogin.classList.add('hidden');
+            }
+        }
+
+        function handleRegister(e) {
+            e.preventDefault();
+            const fullName = document.getElementById('regFullName').value.trim();
+            const username = document.getElementById('regUsername').value.trim().toLowerCase();
+            const password = document.getElementById('regPassword').value;
+
+            if (!fullName || !username || !password) {
+                showAlert('Por favor, preencha todos os campos!');
+                return;
+            }
+
+            const users = JSON.parse(localStorage.getItem('tel_users_db') || '{}');
+
+            if (users[username]) {
+                showAlert('Este nome de usuário já está cadastrado!');
+                return;
+            }
+
+            users[username] = {
+                fullName,
+                username,
+                password
+            };
+
+            localStorage.setItem('tel_users_db', JSON.stringify(users));
+            showAlert('Conta criada com sucesso! Faça seu login.');
+            
+            document.getElementById('registerForm').reset();
+            switchAuthTab('login');
+            document.getElementById('loginUsername').value = username;
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const username = document.getElementById('loginUsername').value.trim().toLowerCase();
+            const password = document.getElementById('loginPassword').value;
+
+            const users = JSON.parse(localStorage.getItem('tel_users_db') || '{}');
+            const user = users[username];
+
+            if (!user || user.password !== password) {
+                showAlert('Usuário ou senha incorretos!');
+                return;
+            }
+
+            currentUser = {
+                username: user.username,
+                fullName: user.fullName
+            };
+
+            localStorage.setItem('tel_active_session', JSON.stringify(currentUser));
+            checkSession();
+            showAlert(`Bem-vindo, ${user.fullName}!`);
+        }
+
+        function checkSession() {
+            const session = localStorage.getItem('tel_active_session');
+            if (session) {
+                currentUser = JSON.parse(session);
+                document.getElementById('authScreen').classList.add('hidden');
+                document.getElementById('mainApp').classList.remove('hidden');
+                document.getElementById('userHeaderInfo').classList.remove('hidden');
+                document.getElementById('userHeaderInfo').classList.add('flex');
+                
+                document.getElementById('userNameDisplay').innerText = currentUser.fullName;
+                document.getElementById('userMatriculaDisplay').innerText = `@${currentUser.username}`;
+
+                loadUserData();
+                renderServices();
+                updateDailySummary();
+            } else {
+                document.getElementById('authScreen').classList.remove('hidden');
+                document.getElementById('mainApp').classList.add('hidden');
+                document.getElementById('userHeaderInfo').classList.add('hidden');
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('tel_active_session');
+            currentUser = null;
+            checkSession();
+            showAlert('Sessão encerrada com sucesso.');
+        }
+
+        function loadUserData() {
+            if (!currentUser) return;
+            const servicesKey = `tel_services_${currentUser.username}`;
+            const recordsKey = `tel_records_${currentUser.username}`;
+
+            const savedServices = localStorage.getItem(servicesKey);
+            userServices = savedServices ? JSON.parse(savedServices) : [...DEFAULT_SERVICES];
+
+            const savedRecords = localStorage.getItem(recordsKey);
+            userRecords = savedRecords ? JSON.parse(savedRecords) : {};
+        }
+
+        function saveUserData() {
+            if (!currentUser) return;
+            localStorage.setItem(`tel_services_${currentUser.username}`, JSON.stringify(userServices));
+            localStorage.setItem(`tel_records_${currentUser.username}`, JSON.stringify(userRecords));
+        }
+
+        function changeDate() {
+            currentDateStr = document.getElementById('selectedDate').value;
+            renderServices();
+            updateDailySummary();
+        }
+
+        function setToday() {
+            currentDateStr = new Date().toISOString().split('T')[0];
+            document.getElementById('selectedDate').value = currentDateStr;
+            renderServices();
+            updateDailySummary();
+        }
+
+        function switchTab(tab) {
+            const btnDaily = document.getElementById('tabDaily');
+            const btnCalendar = document.getElementById('tabCalendar');
+            const btnAnalytics = document.getElementById('tabAnalytics');
+
+            const viewDaily = document.getElementById('viewDaily');
+            const viewCalendar = document.getElementById('viewCalendar');
+            const viewAnalytics = document.getElementById('viewAnalytics');
+
+            const inactiveClass = "flex-1 md:flex-none px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-slate-600 hover:bg-slate-100 flex items-center justify-center space-x-2 transition";
+            const activeClass = "flex-1 md:flex-none px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center space-x-2 transition bg-tel-navy text-white shadow";
+
+            btnDaily.className = tab === 'daily' ? activeClass : inactiveClass;
+            btnCalendar.className = tab === 'calendar' ? activeClass : inactiveClass;
+            btnAnalytics.className = tab === 'analytics' ? activeClass : inactiveClass;
+
+            viewDaily.classList.toggle('hidden', tab !== 'daily');
+            viewCalendar.classList.toggle('hidden', tab !== 'calendar');
+            viewAnalytics.classList.toggle('hidden', tab !== 'analytics');
+
+            if (tab === 'calendar') {
+                renderCalendar();
+                renderMonthStats();
+            } else if (tab === 'analytics') {
+                renderAnalytics();
+            }
+        }
+
+        function renderServices() {
+            const grid = document.getElementById('servicesGrid');
+            grid.innerHTML = '';
+
+            const dayRecord = userRecords[currentDateStr] || {};
+
+            userServices.forEach(service => {
+                const count = dayRecord[service.id] || 0;
+                
+                const card = document.createElement('div');
+                card.className = "bg-slate-50 rounded-2xl p-5 border border-slate-200 flex flex-col justify-between hover:border-tel-orange/50 transition shadow-sm";
+                card.innerHTML = `
+                    <div class="flex items-start justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="p-3 bg-white text-tel-navy rounded-2xl shadow-sm border border-slate-100">
+                                <i data-lucide="${service.icon || 'shield'}" class="w-6 h-6 text-tel-orange"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-800 text-sm leading-tight">${service.name}</h4>
+                                <span class="text-[11px] font-medium text-slate-400">Certificação de Serviços</span>
+                            </div>
+                        </div>
+                        <input type="number" min="0" value="${count}" onchange="setDirectCounter('${service.id}', this.value)" class="w-16 text-center text-xl font-black text-tel-navy bg-white border border-slate-200 rounded-xl py-1 outline-none focus:ring-2 focus:ring-tel-orange">
+                    </div>
+
+                    <div class="flex items-center gap-2 mt-5 pt-3 border-t border-slate-200/80">
+                        <button onclick="updateCounter('${service.id}', -1)" class="counter-btn flex-1 py-2 bg-white hover:bg-red-50 text-red-600 font-bold rounded-xl border border-slate-200 text-xs flex items-center justify-center">
+                            -1
+                        </button>
+                        <button onclick="updateCounter('${service.id}', 1)" class="counter-btn flex-1 py-2 bg-tel-navy hover:bg-tel-dark text-white font-bold rounded-xl text-xs flex items-center justify-center shadow">
+                            +1
+                        </button>
+                        <button onclick="updateCounter('${service.id}', 5)" class="counter-btn py-2 px-3 bg-tel-orange/10 hover:bg-tel-orange hover:text-white text-tel-orange font-bold rounded-xl text-xs flex items-center justify-center transition">
+                            +5
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+            lucide.createIcons();
+        }
+
+        function updateCounter(serviceId, delta) {
+            if (!userRecords[currentDateStr]) userRecords[currentDateStr] = {};
+            let currentCount = userRecords[currentDateStr][serviceId] || 0;
+            currentCount += delta;
+            if (currentCount < 0) currentCount = 0;
+            userRecords[currentDateStr][serviceId] = currentCount;
+            saveUserData();
+            renderServices();
+            updateDailySummary();
+        }
+
+        function setDirectCounter(serviceId, value) {
+            let val = parseInt(value) || 0;
+            if (val < 0) val = 0;
+            if (!userRecords[currentDateStr]) userRecords[currentDateStr] = {};
+            userRecords[currentDateStr][serviceId] = val;
+            saveUserData();
+            updateDailySummary();
+        }
+
+        function updateDailySummary() {
+            const dayRecord = userRecords[currentDateStr] || {};
+            let totalCount = 0;
+
+            userServices.forEach(service => {
+                totalCount += (dayRecord[service.id] || 0);
+            });
+
+            document.getElementById('dailyTotalCount').innerText = totalCount;
+        }
+
+        function toggleCustomServiceModal(show) {
+            const modal = document.getElementById('customModal');
+            modal.classList.toggle('hidden', !show);
+            modal.classList.toggle('flex', show);
+        }
+
+        function handleAddCustomService(e) {
+            e.preventDefault();
+            const name = document.getElementById('customName').value.trim();
+            if (name) {
+                const id = 'custom_' + Date.now();
+                userServices.push({ id, name, icon: 'layers' });
+                saveUserData();
+                renderServices();
+                toggleCustomServiceModal(false);
+                document.getElementById('customServiceForm').reset();
+                showAlert('Novo tipo de serviço cadastrado!');
+            }
+        }
+
+        function clearDayData() {
+            if (confirm(`Confirma zerar todas as contagens gravadas na data ${currentDateStr}?`)) {
+                delete userRecords[currentDateStr];
+                saveUserData();
+                renderServices();
+                updateDailySummary();
+                showAlert('Os dados deste dia foram zerados.');
+            }
+        }
+
+        function exportDayReport() {
+            const dayRecord = userRecords[currentDateStr] || {};
+            let text = `TEL TELECOMUNICAÇÕES - RESUMO DE PRODUÇÃO DIÁRIA\n`;
+            text += `Certificador: ${currentUser.fullName} (@${currentUser.username})\n`;
+            text += `Data: ${currentDateStr}\n`;
+            text += `-------------------------------------------\n`;
+
+            let total = 0;
+            userServices.forEach(s => {
+                const c = dayRecord[s.id] || 0;
+                if (c > 0) {
+                    text += `- ${s.name}: ${c}\n`;
+                    total += c;
+                }
+            });
+
+            text += `-------------------------------------------\n`;
+            text += `TOTAL CERTIFICADO NO DIA: ${total}\n`;
+
+            const blob = new Blob([text], { type: 'text/plain' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `producao_${currentUser.username}_${currentDateStr}.txt`;
+            a.click();
+        }
+
+        function renderCalendar() {
+            const grid = document.getElementById('calendarGrid');
+            grid.innerHTML = '';
+
+            const year = calendarDate.getFullYear();
+            const month = calendarDate.getMonth();
+
+            const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+            document.getElementById('calendarMonthYear').innerText = `${monthNames[month]} ${year}`;
+
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+            for (let i = 0; i < firstDay; i++) {
+                const empty = document.createElement('div');
+                empty.className = "h-20 bg-slate-50/50 rounded-xl border border-slate-100";
+                grid.appendChild(empty);
+            }
+
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                const dayRecord = userRecords[dateStr];
+                
+                let countSum = 0;
+                if (dayRecord) Object.values(dayRecord).forEach(v => countSum += v);
+
+                const isToday = dateStr === new Date().toISOString().split('T')[0];
+                const isSelected = dateStr === currentDateStr;
+
+                const dayCard = document.createElement('div');
+                dayCard.onclick = () => selectDateFromCalendar(dateStr);
+
+                dayCard.className = `h-20 p-2 rounded-xl border transition cursor-pointer flex flex-col justify-between ${
+                    isSelected ? 'border-tel-orange ring-2 ring-tel-orange/30 bg-orange-50/30' : 
+                    isToday ? 'border-tel-navy bg-slate-50' : 'border-slate-200 hover:border-slate-300 bg-white'
+                }`;
+
+                dayCard.innerHTML = `
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-bold ${isToday ? 'text-tel-navy font-black' : 'text-slate-600'}">${day}</span>
+                        ${isToday ? '<span class="text-[9px] bg-tel-navy text-white px-1.5 py-0.5 rounded font-bold">Hoje</span>' : ''}
+                    </div>
+                    ${countSum > 0 ? `
+                        <div class="bg-tel-navy text-white text-center rounded-lg py-1 shadow-sm">
+                            <span class="text-xs font-black">${countSum}</span>
+                            <span class="text-[8px] block text-slate-300">serviços</span>
+                        </div>
+                    ` : '<span class="text-[10px] text-slate-300 self-center">-</span>'}
+                `;
+
+                grid.appendChild(dayCard);
+            }
+        }
+
+        function changeMonth(delta) {
+            calendarDate.setMonth(calendarDate.getMonth() + delta);
+            renderCalendar();
+            renderMonthStats();
+        }
+
+        function selectDateFromCalendar(dateStr) {
+            currentDateStr = dateStr;
+            document.getElementById('selectedDate').value = currentDateStr;
+            switchTab('daily');
+        }
+
+        function renderMonthStats() {
+            const year = calendarDate.getFullYear();
+            const month = calendarDate.getMonth();
+
+            let totalMonthCount = 0;
+            let activeDays = 0;
+            const serviceCounts = {};
+
+            Object.keys(userRecords).forEach(dateStr => {
+                const d = new Date(dateStr + 'T00:00:00');
+                if (d.getFullYear() === year && d.getMonth() === month) {
+                    let daySum = 0;
+                    Object.entries(userRecords[dateStr]).forEach(([sId, count]) => {
+                        daySum += count;
+                        serviceCounts[sId] = (serviceCounts[sId] || 0) + count;
+                    });
+                    if (daySum > 0) {
+                        totalMonthCount += daySum;
+                        activeDays++;
+                    }
+                }
+            });
+
+            const avg = activeDays > 0 ? (totalMonthCount / activeDays).toFixed(1) : '0.0';
+
+            let topServiceId = null;
+            let maxCount = 0;
+            Object.entries(serviceCounts).forEach(([sId, count]) => {
+                if (count > maxCount) {
+                    maxCount = count;
+                    topServiceId = sId;
+                }
+            });
+
+            const topServiceObj = userServices.find(s => s.id === topServiceId);
+
+            document.getElementById('monthTotalCount').innerText = totalMonthCount;
+            document.getElementById('monthAvgCount').innerText = avg;
+            document.getElementById('topServiceDisplay').innerText = topServiceObj ? `${topServiceObj.name} (${maxCount})` : 'Nenhum';
+        }
+
+        function renderAnalytics() {
+            const year = calendarDate.getFullYear();
+            const month = calendarDate.getMonth();
+
+            const categoryTotals = {};
+            let grandTotal = 0;
+
+            userServices.forEach(s => categoryTotals[s.id] = 0);
+
+            Object.keys(userRecords).forEach(dateStr => {
+                const d = new Date(dateStr + 'T00:00:00');
+                if (d.getFullYear() === year && d.getMonth() === month) {
+                    Object.entries(userRecords[dateStr]).forEach(([sId, count]) => {
+                        if (categoryTotals[sId] !== undefined) {
+                            categoryTotals[sId] += count;
+                            grandTotal += count;
+                        }
+                    });
+                }
+            });
+
+            const tbody = document.getElementById('analyticsTableBody');
+            tbody.innerHTML = '';
+
+            userServices.forEach(s => {
+                const count = categoryTotals[s.id] || 0;
+                const perc = grandTotal > 0 ? ((count / grandTotal) * 100).toFixed(1) : '0.0';
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="p-3 font-bold text-slate-700">${s.name}</td>
+                    <td class="p-3 font-semibold text-slate-600">${count}</td>
+                    <td class="p-3 font-semibold text-tel-orange">${perc}%</td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            const ctx = document.getElementById('analyticsChart').getContext('2d');
+            if (myChart) myChart.destroy();
+
+            myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: userServices.map(s => s.name),
+                    datasets: [{
+                        label: 'Total de Produções',
+                        data: userServices.map(s => categoryTotals[s.id] || 0),
+                        backgroundColor: '#ff6600',
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { y: { beginAtZero: true } }
+                }
+            });
+        }
+
+        function exportCSV() {
+            let csv = "Tipo de Serviço;Total Mês\n";
+            userServices.forEach(s => {
+                csv += `${s.name};0\n`;
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `relatorio_certificacao_${currentUser.username}.csv`;
+            a.click();
+        }
+    </script>
+</body>
+</html>
