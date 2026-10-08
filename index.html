@@ -53,9 +53,9 @@
                     </div>
                     <div>
                         <h1 class="text-xl font-black tracking-wider leading-none flex items-center gap-1">
-                            CONTROLE <span class="text-tel-orange font-light">CERTIFICAÇÕES</span>
+                            CONTROLE <span class="text-tel-orange font-light">MENSAL</span>
                         </h1>
-                        <p class="text-[11px] text-slate-300 font-medium tracking-wide">tel de Certificação de Serviços</p>
+                        <p class="text-[11px] text-slate-300 font-medium tracking-wide">Controle de Certificações de Serviços</p>
                     </div>
                 </div>
 
@@ -357,13 +357,13 @@
 
         window.onload = function() {
             lucide.createIcons();
-            document.getelementById('selectedDate').value = currentDateStr;
+            document.getElementById('selectedDate').value = currentDateStr;
             checkSession();
         };
 
         function showAlert(msg) {
-            const box = document.getelementById('alertBox');
-            document.getelementById('alertMessage').innerText = msg;
+            const box = document.getElementById('alertBox');
+            document.getElementById('alertMessage').innerText = msg;
             box.classList.remove('hidden');
             setTimeout(() => {
                 box.classList.add('hidden');
@@ -371,10 +371,10 @@
         }
 
         function switchAuthTab(tab) {
-            const btnLogin = document.getelementById('btnTabLogin');
-            const btnReg = document.getelementById('btnTabRegister');
-            const formLogin = document.getelementById('loginForm');
-            const formReg = document.getelementById('registerForm');
+            const btnLogin = document.getElementById('btnTabLogin');
+            const btnReg = document.getElementById('btnTabRegister');
+            const formLogin = document.getElementById('loginForm');
+            const formReg = document.getElementById('registerForm');
 
             if (tab === 'login') {
                 btnLogin.className = "flex-1 py-2 text-xs font-bold rounded-lg transition bg-white text-tel-navy shadow";
@@ -391,9 +391,9 @@
 
         function handleRegister(e) {
             e.preventDefault();
-            const fullName = document.getelementById('regFullName').value.trim();
-            const username = document.getelementById('regUsername').value.trim().toLowerCase();
-            const password = document.getelementById('regPassword').value;
+            const fullName = document.getElementById('regFullName').value.trim();
+            const username = document.getElementById('regUsername').value.trim().toLowerCase();
+            const password = document.getElementById('regPassword').value;
 
             if (!fullName || !username || !password) {
                 showAlert('Por favor, preencha todos os campos!');
@@ -416,15 +416,15 @@
             localStorage.setItem('tel_users_db', JSON.stringify(users));
             showAlert('Conta criada com sucesso! Faça seu login.');
             
-            document.getelementById('registerForm').reset();
+            document.getElementById('registerForm').reset();
             switchAuthTab('login');
-            document.getelementById('loginUsername').value = username;
+            document.getElementById('loginUsername').value = username;
         }
 
         function handleLogin(e) {
             e.preventDefault();
-            const username = document.getelementById('loginUsername').value.trim().toLowerCase();
-            const password = document.getelementById('loginPassword').value;
+            const username = document.getElementById('loginUsername').value.trim().toLowerCase();
+            const password = document.getElementById('loginPassword').value;
 
             const users = JSON.parse(localStorage.getItem('tel_users_db') || '{}');
             const user = users[username];
@@ -448,21 +448,21 @@
             const session = localStorage.getItem('tel_active_session');
             if (session) {
                 currentUser = JSON.parse(session);
-                document.getelementById('authScreen').classList.add('hidden');
-                document.getelementById('mainApp').classList.remove('hidden');
-                document.getelementById('userHeaderInfo').classList.remove('hidden');
-                document.getelementById('userHeaderInfo').classList.add('flex');
+                document.getElementById('authScreen').classList.add('hidden');
+                document.getElementById('mainApp').classList.remove('hidden');
+                document.getElementById('userHeaderInfo').classList.remove('hidden');
+                document.getElementById('userHeaderInfo').classList.add('flex');
                 
-                document.getelementById('userNameDisplay').innerText = currentUser.fullName;
-                document.getelementById('userMatriculaDisplay').innerText = `@${currentUser.username}`;
+                document.getElementById('userNameDisplay').innerText = currentUser.fullName;
+                document.getElementById('userMatriculaDisplay').innerText = `@${currentUser.username}`;
 
                 loadUserData();
                 renderServices();
                 updateDailySummary();
             } else {
-                document.getelementById('authScreen').classList.remove('hidden');
-                document.getelementById('mainApp').classList.add('hidden');
-                document.getelementById('userHeaderInfo').classList.add('hidden');
+                document.getElementById('authScreen').classList.remove('hidden');
+                document.getElementById('mainApp').classList.add('hidden');
+                document.getElementById('userHeaderInfo').classList.add('hidden');
             }
         }
 
@@ -492,26 +492,26 @@
         }
 
         function changeDate() {
-            currentDateStr = document.getelementById('selectedDate').value;
+            currentDateStr = document.getElementById('selectedDate').value;
             renderServices();
             updateDailySummary();
         }
 
         function setToday() {
             currentDateStr = new Date().toISOString().split('T')[0];
-            document.getelementById('selectedDate').value = currentDateStr;
+            document.getElementById('selectedDate').value = currentDateStr;
             renderServices();
             updateDailySummary();
         }
 
         function switchTab(tab) {
-            const btnDaily = document.getelementById('tabDaily');
-            const btnCalendar = document.getelementById('tabCalendar');
-            const btnAnalytics = document.getelementById('tabAnalytics');
+            const btnDaily = document.getElementById('tabDaily');
+            const btnCalendar = document.getElementById('tabCalendar');
+            const btnAnalytics = document.getElementById('tabAnalytics');
 
-            const viewDaily = document.getelementById('viewDaily');
-            const viewCalendar = document.getelementById('viewCalendar');
-            const viewAnalytics = document.getelementById('viewAnalytics');
+            const viewDaily = document.getElementById('viewDaily');
+            const viewCalendar = document.getElementById('viewCalendar');
+            const viewAnalytics = document.getElementById('viewAnalytics');
 
             const inactiveClass = "flex-1 md:flex-none px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-slate-600 hover:bg-slate-100 flex items-center justify-center space-x-2 transition";
             const activeClass = "flex-1 md:flex-none px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center space-x-2 transition bg-tel-navy text-white shadow";
@@ -533,7 +533,7 @@
         }
 
         function renderServices() {
-            const grid = document.getelementById('servicesGrid');
+            const grid = document.getElementById('servicesGrid');
             grid.innerHTML = '';
 
             const dayRecord = userRecords[currentDateStr] || {};
@@ -602,25 +602,25 @@
                 totalCount += (dayRecord[service.id] || 0);
             });
 
-            document.getelementById('dailyTotalCount').innerText = totalCount;
+            document.getElementById('dailyTotalCount').innerText = totalCount;
         }
 
         function toggleCustomServiceModal(show) {
-            const modal = document.getelementById('customModal');
+            const modal = document.getElementById('customModal');
             modal.classList.toggle('hidden', !show);
             modal.classList.toggle('flex', show);
         }
 
         function handleAddCustomService(e) {
             e.preventDefault();
-            const name = document.getelementById('customName').value.trim();
+            const name = document.getElementById('customName').value.trim();
             if (name) {
                 const id = 'custom_' + Date.now();
                 userServices.push({ id, name, icon: 'layers' });
                 saveUserData();
                 renderServices();
                 toggleCustomServiceModal(false);
-                document.getelementById('customServiceForm').reset();
+                document.getElementById('customServiceForm').reset();
                 showAlert('Novo tipo de serviço cadastrado!');
             }
         }
@@ -637,7 +637,7 @@
 
         function exportDayReport() {
             const dayRecord = userRecords[currentDateStr] || {};
-            let text = `tel telECOMUNICAÇÕES - RESUMO DE PRODUÇÃO DIÁRIA\n`;
+            let text = `TEL TELECOMUNICAÇÕES - RESUMO DE PRODUÇÃO DIÁRIA\n`;
             text += `Certificador: ${currentUser.fullName} (@${currentUser.username})\n`;
             text += `Data: ${currentDateStr}\n`;
             text += `-------------------------------------------\n`;
@@ -662,14 +662,14 @@
         }
 
         function renderCalendar() {
-            const grid = document.getelementById('calendarGrid');
+            const grid = document.getElementById('calendarGrid');
             grid.innerHTML = '';
 
             const year = calendarDate.getFullYear();
             const month = calendarDate.getMonth();
 
             const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
-            document.getelementById('calendarMonthYear').innerText = `${monthNames[month]} ${year}`;
+            document.getElementById('calendarMonthYear').innerText = `${monthNames[month]} ${year}`;
 
             const firstDay = new Date(year, month, 1).getDay();
             const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -723,7 +723,7 @@
 
         function selectDateFromCalendar(dateStr) {
             currentDateStr = dateStr;
-            document.getelementById('selectedDate').value = currentDateStr;
+            document.getElementById('selectedDate').value = currentDateStr;
             switchTab('daily');
         }
 
@@ -763,9 +763,9 @@
 
             const topServiceObj = userServices.find(s => s.id === topServiceId);
 
-            document.getelementById('monthTotalCount').innerText = totalMonthCount;
-            document.getelementById('monthAvgCount').innerText = avg;
-            document.getelementById('topServiceDisplay').innerText = topServiceObj ? `${topServiceObj.name} (${maxCount})` : 'Nenhum';
+            document.getElementById('monthTotalCount').innerText = totalMonthCount;
+            document.getElementById('monthAvgCount').innerText = avg;
+            document.getElementById('topServiceDisplay').innerText = topServiceObj ? `${topServiceObj.name} (${maxCount})` : 'Nenhum';
         }
 
         function renderAnalytics() {
@@ -789,7 +789,7 @@
                 }
             });
 
-            const tbody = document.getelementById('analyticsTableBody');
+            const tbody = document.getElementById('analyticsTableBody');
             tbody.innerHTML = '';
 
             userServices.forEach(s => {
@@ -805,7 +805,7 @@
                 tbody.appendChild(tr);
             });
 
-            const ctx = document.getelementById('analyticsChart').getContext('2d');
+            const ctx = document.getElementById('analyticsChart').getContext('2d');
             if (myChart) myChart.destroy();
 
             myChart = new Chart(ctx, {
