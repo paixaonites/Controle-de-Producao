@@ -13,7 +13,7 @@
             theme: {
                 extend: {
                     colors: {
-                        tel: {
+                        : {
                             navy: '#003366',
                             dark: '#002244',
                             orange: '#ff6600',
@@ -40,11 +40,11 @@
 <body class="text-slate-800 min-h-screen flex flex-col justify-between">
 
     <div id="app" class="flex-grow flex flex-col">
-        <header class="bg-tel-navy text-white shadow-xl sticky top-0 z-50">
+        <header class="bg-controle-navy text-white shadow-xl sticky top-0 z-50">
             <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
                 <div class="flex items-center space-x-3">
                     <div class="bg-white p-1.5 rounded-xl flex items-center justify-center shadow-md">
-                        <svg class="w-8 h-8 text-tel-orange" viewBox="0 0 100 100" fill="currentColor">
+                        <svg class="w-8 h-8 text-controle-orange" viewBox="0 0 100 100" fill="currentColor">
                             <path d="M20,75 L40,25 L60,75 L45,75 L40,55 L30,55 L25,75 Z M32,45 L38,45 L35,32 Z" fill="#003366" />
                             <circle cx="70" cy="30" r="12" fill="#ff6600" />
                             <path d="M55 30 A 25 25 0 0 1 85 60" stroke="#ff6600" stroke-width="6" fill="none" stroke-linecap="round" />
@@ -53,7 +53,7 @@
                     </div>
                     <div>
                         <h1 class="text-xl font-black tracking-wider leading-none flex items-center gap-1">
-                            CONTROLE <span class="text-tel-orange font-light">CERTIFICAÇÕES</span>
+                            CONTROLE <span class="text-controle-orange font-light">CERTIFICAÇÕES</span>
                         </h1>
                         <p class="text-[11px] text-slate-300 font-medium tracking-wide">Controle de Certificação de Serviços</p>
                     </div>
@@ -72,23 +72,23 @@
             </div>
         </header>
 
-        <div id="alertBox" class="hidden fixed top-20 right-4 z-50 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center space-x-3 border-l-4 border-tel-orange">
-            <i data-lucide="info" class="w-5 h-5 text-tel-orange"></i>
+        <div id="alertBox" class="hidden fixed top-20 right-4 z-50 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center space-x-3 border-l-4 border-controle-orange">
+            <i data-lucide="info" class="w-5 h-5 text-controle-orange"></i>
             <span id="alertMessage" class="text-xs font-semibold"></span>
         </div>
 
         <div id="authScreen" class="flex-grow flex items-center justify-center p-4">
             <div class="bg-white rounded-3xl shadow-2xl border border-slate-100 p-8 w-full max-w-md">
                 <div class="text-center mb-8">
-                    <div class="inline-flex p-4 bg-tel-navy/10 text-tel-navy rounded-2xl mb-3">
-                        <i data-lucide="shield-check" class="w-10 h-10 text-tel-orange"></i>
+                    <div class="inline-flex p-4 bg-controle-navy/10 text-controle-navy rounded-2xl mb-3">
+                        <i data-lucide="shield-check" class="w-10 h-10 text-controle-orange"></i>
                     </div>
-                    <h2 class="text-2xl font-black text-tel-navy">Acesso ao Sistema</h2>
+                    <h2 class="text-2xl font-black text-controle-navy">Acesso ao Sistema</h2>
                     <p class="text-slate-500 text-xs mt-1 font-medium">Sua conta de produção na Empresa</p>
                 </div>
 
                 <div class="flex bg-slate-100 p-1 rounded-xl mb-6">
-                    <button id="btnTabLogin" onclick="switchAuthTab('login')" class="flex-1 py-2 text-xs font-bold rounded-lg transition bg-white text-tel-navy shadow">
+                    <button id="btnTabLogin" onclick="switchAuthTab('login')" class="flex-1 py-2 text-xs font-bold rounded-lg transition bg-white text-controle-navy shadow">
                         Entrar
                     </button>
                     <button id="btnTabRegister" onclick="switchAuthTab('register')" class="flex-1 py-2 text-xs font-bold text-slate-500 hover:text-slate-800 rounded-lg transition">
@@ -101,17 +101,17 @@
                         <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">Nome de Usuário</label>
                         <div class="relative">
                             <i data-lucide="user" class="w-5 h-5 absolute left-3.5 top-3 text-slate-400"></i>
-                            <input type="text" id="loginUsername" required placeholder="Digite seu usuário" class="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-tel-orange focus:border-transparent outline-none text-slate-800 font-medium text-sm">
+                            <input type="text" id="loginUsername" required placeholder="Digite seu usuário" class="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-controle-orange focus:border-transparent outline-none text-slate-800 font-medium text-sm">
                         </div>
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">Senha</label>
                         <div class="relative">
                             <i data-lucide="lock" class="w-5 h-5 absolute left-3.5 top-3 text-slate-400"></i>
-                            <input type="password" id="loginPassword" required placeholder="Digite sua senha" class="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-tel-orange focus:border-transparent outline-none text-slate-800 font-medium text-sm">
+                            <input type="password" id="loginPassword" required placeholder="Digite sua senha" class="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-controle-orange focus:border-transparent outline-none text-slate-800 font-medium text-sm">
                         </div>
                     </div>
-                    <button type="submit" class="w-full bg-tel-orange hover:bg-tel-orangeHover text-white font-bold py-3.5 rounded-xl transition shadow-lg shadow-tel-orange/30 flex items-center justify-center space-x-2 mt-6 text-sm">
+                    <button type="submit" class="w-full bg-controle-orange hover:bg-controle-orangeHover text-white font-bold py-3.5 rounded-xl transition shadow-lg shadow-controle-orange/30 flex items-center justify-center space-x-2 mt-6 text-sm">
                         <span>Acessar Painel</span>
                         <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </button>
@@ -122,24 +122,24 @@
                         <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">Nome Completo</label>
                         <div class="relative">
                             <i data-lucide="user-check" class="w-5 h-5 absolute left-3.5 top-3 text-slate-400"></i>
-                            <input type="text" id="regFullName" required placeholder="Ex: Carlos Silva" class="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-tel-orange focus:border-transparent outline-none text-slate-800 font-medium text-sm">
+                            <input type="text" id="regFullName" required placeholder="Ex: Carlos Silva" class="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-controle-orange focus:border-transparent outline-none text-slate-800 font-medium text-sm">
                         </div>
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">Nome de Usuário</label>
                         <div class="relative">
                             <i data-lucide="at-sign" class="w-5 h-5 absolute left-3.5 top-3 text-slate-400"></i>
-                            <input type="text" id="regUsername" required placeholder="Ex: csilva" class="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-tel-orange focus:border-transparent outline-none text-slate-800 font-medium text-sm">
+                            <input type="text" id="regUsername" required placeholder="Ex: csilva" class="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-controle-orange focus:border-transparent outline-none text-slate-800 font-medium text-sm">
                         </div>
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">Senha</label>
                         <div class="relative">
                             <i data-lucide="key-round" class="w-5 h-5 absolute left-3.5 top-3 text-slate-400"></i>
-                            <input type="password" id="regPassword" required placeholder="Crie uma senha de acesso" class="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-tel-orange focus:border-transparent outline-none text-slate-800 font-medium text-sm">
+                            <input type="password" id="regPassword" required placeholder="Crie uma senha de acesso" class="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-controle-orange focus:border-transparent outline-none text-slate-800 font-medium text-sm">
                         </div>
                     </div>
-                    <button type="submit" class="w-full bg-tel-navy hover:bg-tel-dark text-white font-bold py-3.5 rounded-xl transition shadow-lg flex items-center justify-center space-x-2 mt-6 text-sm">
+                    <button type="submit" class="w-full bg-controle-navy hover:bg-controle-dark text-white font-bold py-3.5 rounded-xl transition shadow-lg flex items-center justify-center space-x-2 mt-6 text-sm">
                         <span>Cadastrar Conta</span>
                         <i data-lucide="check-circle" class="w-4 h-4"></i>
                     </button>
@@ -151,7 +151,7 @@
             
             <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 flex flex-col md:flex-row justify-between items-center gap-4">
                 <div class="flex items-center space-x-2 w-full md:w-auto overflow-x-auto">
-                    <button onclick="switchTab('daily')" id="tabDaily" class="flex-1 md:flex-none px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center space-x-2 transition bg-tel-navy text-white shadow">
+                    <button onclick="switchTab('daily')" id="tabDaily" class="flex-1 md:flex-none px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center space-x-2 transition bg-controle-navy text-white shadow">
                         <i data-lucide="plus-circle" class="w-4 h-4"></i>
                         <span>Lançamento Diário</span>
                     </button>
@@ -168,7 +168,7 @@
                 <div class="flex items-center space-x-3 w-full md:w-auto justify-end border-t md:border-t-0 pt-3 md:pt-0 border-slate-100">
                     <label class="text-xs font-bold text-slate-500 uppercase tracking-wider hidden sm:block">Data Selecionada:</label>
                     <div class="relative flex-grow sm:flex-grow-0">
-                        <input type="date" id="selectedDate" onchange="changeDate()" class="w-full bg-slate-100 border border-slate-200 rounded-xl px-4 py-2 text-sm font-bold text-tel-navy outline-none focus:ring-2 focus:ring-tel-orange">
+                        <input type="date" id="selectedDate" onchange="changeDate()" class="w-full bg-slate-100 border border-slate-200 rounded-xl px-4 py-2 text-sm font-bold text-controle-navy outline-none focus:ring-2 focus:ring-controle-orange">
                     </div>
                     <button onclick="setToday()" class="px-3 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-bold rounded-xl transition">
                         Hoje
@@ -178,7 +178,7 @@
 
             <div id="viewDaily" class="space-y-6">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div class="md:col-span-2 bg-gradient-to-br from-tel-navy to-tel-dark text-white rounded-2xl p-6 shadow-lg relative overflow-hidden flex items-center justify-between">
+                    <div class="md:col-span-2 bg-gradient-to-br from-controle-navy to-controle-dark text-white rounded-2xl p-6 shadow-lg relative overflow-hidden flex items-center justify-between">
                         <div class="z-10">
                             <p class="text-xs font-medium text-slate-300 uppercase tracking-wider">Somatório do Dia</p>
                             <h3 id="dailyTotalCount" class="text-5xl font-black mt-2 text-white">0</h3>
@@ -210,10 +210,10 @@
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
                     <div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-100">
                         <div>
-                            <h2 class="text-lg font-black text-tel-navy">Contagem por Tipo de Serviço</h2>
+                            <h2 class="text-lg font-black text-controle-navy">Contagem por Tipo de Serviço</h2>
                             <p class="text-xs text-slate-500">Clique nos botões de atalho para adicionar ou remover serviços executados</p>
                         </div>
-                        <button onclick="toggleCustomServiceModal(true)" class="px-3.5 py-2 bg-tel-navy/10 text-tel-navy hover:bg-tel-navy hover:text-white rounded-xl text-xs font-bold transition flex items-center gap-1.5">
+                        <button onclick="toggleCustomServiceModal(true)" class="px-3.5 py-2 bg-controle-navy/10 text-controle-navy hover:bg-controle-navy hover:text-white rounded-xl text-xs font-bold transition flex items-center gap-1.5">
                             <i data-lucide="plus" class="w-4 h-4"></i> Adicionar Tipo de Serviço
                         </button>
                     </div>
@@ -228,18 +228,18 @@
                     <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
                         <div class="flex items-center justify-between">
                             <span class="text-xs font-bold text-slate-400 uppercase">Total no Mês</span>
-                            <i data-lucide="calendar-range" class="w-5 h-5 text-tel-navy"></i>
+                            <i data-lucide="calendar-range" class="w-5 h-5 text-controle-navy"></i>
                         </div>
-                        <h3 id="monthTotalCount" class="text-3xl font-black text-tel-navy mt-2">0</h3>
+                        <h3 id="monthTotalCount" class="text-3xl font-black text-controle-navy mt-2">0</h3>
                         <p class="text-xs text-slate-500 mt-1">Certificações efetuadas neste mês</p>
                     </div>
 
                     <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
                         <div class="flex items-center justify-between">
                             <span class="text-xs font-bold text-slate-400 uppercase">Média Diária</span>
-                            <i data-lucide="trending-up" class="w-5 h-5 text-tel-orange"></i>
+                            <i data-lucide="trending-up" class="w-5 h-5 text-controle-orange"></i>
                         </div>
-                        <h3 id="monthAvgCount" class="text-3xl font-black text-tel-orange mt-2">0.0</h3>
+                        <h3 id="monthAvgCount" class="text-3xl font-black text-controle-orange mt-2">0.0</h3>
                         <p class="text-xs text-slate-500 mt-1">Média por dia trabalhado</p>
                     </div>
 
@@ -256,8 +256,8 @@
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
                     <div class="flex items-center justify-between mb-6">
                         <div class="flex items-center space-x-3">
-                            <i data-lucide="calendar" class="w-6 h-6 text-tel-orange"></i>
-                            <h2 id="calendarMonthYear" class="text-xl font-bold text-tel-navy capitalize"></h2>
+                            <i data-lucide="calendar" class="w-6 h-6 text-controle-orange"></i>
+                            <h2 id="calendarMonthYear" class="text-xl font-bold text-controle-navy capitalize"></h2>
                         </div>
                         <div class="flex items-center space-x-2">
                             <button onclick="changeMonth(-1)" class="p-2 hover:bg-slate-100 rounded-xl transition text-slate-600">
@@ -288,10 +288,10 @@
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
                     <div class="flex items-center justify-between border-b pb-4">
                         <div>
-                            <h2 class="text-lg font-bold text-tel-navy">Gráfico de Desempenho Mensal</h2>
+                            <h2 class="text-lg font-bold text-controle-navy">Gráfico de Desempenho Mensal</h2>
                             <p class="text-xs text-slate-500">Volume total por tipo de serviço no mês selecionado</p>
                         </div>
-                        <button onclick="exportCSV()" class="px-4 py-2 bg-tel-navy text-white rounded-xl text-xs font-bold hover:bg-tel-dark transition flex items-center gap-1.5 shadow">
+                        <button onclick="exportCSV()" class="px-4 py-2 bg-controle-navy text-white rounded-xl text-xs font-bold hover:bg-controle-dark transition flex items-center gap-1.5 shadow">
                             <i data-lucide="file-spreadsheet" class="w-4 h-4"></i> Exportar Dados (CSV)
                         </button>
                     </div>
@@ -301,7 +301,7 @@
                 </div>
 
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
-                    <h3 class="text-md font-bold text-tel-navy mb-4">Resumo Detalhado por Categoria</h3>
+                    <h3 class="text-md font-bold text-controle-navy mb-4">Resumo Detalhado por Categoria</h3>
                     <div class="overflow-x-auto">
                         <table class="w-full text-left text-xs">
                             <thead class="bg-slate-50 text-slate-500 uppercase border-b border-slate-200">
@@ -323,7 +323,7 @@
     <div id="customModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
         <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 space-y-4">
             <div class="flex items-center justify-between border-b pb-3">
-                <h3 class="text-lg font-bold text-tel-navy">Adicionar Novo Tipo de Serviço</h3>
+                <h3 class="text-lg font-bold text-controle-navy">Adicionar Novo Tipo de Serviço</h3>
                 <button onclick="toggleCustomServiceModal(false)" class="text-slate-400 hover:text-slate-600">
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
@@ -331,11 +331,11 @@
             <form id="customServiceForm" onsubmit="handleAddCustomService(event)" class="space-y-4">
                 <div>
                     <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Nome do Serviço</label>
-                    <input type="text" id="customName" required placeholder="Ex: Validação de Equipamento" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-tel-orange text-sm font-medium">
+                    <input type="text" id="customName" required placeholder="Ex: Validação de Equipamento" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-controle-orange text-sm font-medium">
                 </div>
                 <div class="flex justify-end space-x-2 pt-2">
                     <button type="button" onclick="toggleCustomServiceModal(false)" class="px-4 py-2 text-slate-600 text-xs font-bold hover:bg-slate-100 rounded-xl">Cancelar</button>
-                    <button type="submit" class="px-4 py-2 bg-tel-orange text-white text-xs font-bold rounded-xl hover:bg-tel-orangeHover shadow">Salvar Serviço</button>
+                    <button type="submit" class="px-4 py-2 bg-controle-orange text-white text-xs font-bold rounded-xl hover:bg-controle-orangeHover shadow">Salvar Serviço</button>
                 </div>
             </form>
         </div>
@@ -357,13 +357,13 @@
 
         window.onload = function() {
             lucide.createIcons();
-            document.getElementById('selectedDate').value = currentDateStr;
+            document.gecontroleementById('selectedDate').value = currentDateStr;
             checkSession();
         };
 
         function showAlert(msg) {
-            const box = document.getElementById('alertBox');
-            document.getElementById('alertMessage').innerText = msg;
+            const box = document.gecontroleementById('alertBox');
+            document.gecontroleementById('alertMessage').innerText = msg;
             box.classList.remove('hidden');
             setTimeout(() => {
                 box.classList.add('hidden');
@@ -371,18 +371,18 @@
         }
 
         function switchAuthTab(tab) {
-            const btnLogin = document.getElementById('btnTabLogin');
-            const btnReg = document.getElementById('btnTabRegister');
-            const formLogin = document.getElementById('loginForm');
-            const formReg = document.getElementById('registerForm');
+            const btnLogin = document.gecontroleementById('btnTabLogin');
+            const btnReg = document.gecontroleementById('btnTabRegister');
+            const formLogin = document.gecontroleementById('loginForm');
+            const formReg = document.gecontroleementById('registerForm');
 
             if (tab === 'login') {
-                btnLogin.className = "flex-1 py-2 text-xs font-bold rounded-lg transition bg-white text-tel-navy shadow";
+                btnLogin.className = "flex-1 py-2 text-xs font-bold rounded-lg transition bg-white text-controle-navy shadow";
                 btnReg.className = "flex-1 py-2 text-xs font-bold text-slate-500 hover:text-slate-800 rounded-lg transition";
                 formLogin.classList.remove('hidden');
                 formReg.classList.add('hidden');
             } else {
-                btnReg.className = "flex-1 py-2 text-xs font-bold rounded-lg transition bg-white text-tel-navy shadow";
+                btnReg.className = "flex-1 py-2 text-xs font-bold rounded-lg transition bg-white text-controle-navy shadow";
                 btnLogin.className = "flex-1 py-2 text-xs font-bold text-slate-500 hover:text-slate-800 rounded-lg transition";
                 formReg.classList.remove('hidden');
                 formLogin.classList.add('hidden');
@@ -391,16 +391,16 @@
 
         function handleRegister(e) {
             e.preventDefault();
-            const fullName = document.getElementById('regFullName').value.trim();
-            const username = document.getElementById('regUsername').value.trim().toLowerCase();
-            const password = document.getElementById('regPassword').value;
+            const fullName = document.gecontroleementById('regFullName').value.trim();
+            const username = document.gecontroleementById('regUsername').value.trim().toLowerCase();
+            const password = document.gecontroleementById('regPassword').value;
 
             if (!fullName || !username || !password) {
                 showAlert('Por favor, preencha todos os campos!');
                 return;
             }
 
-            const users = JSON.parse(localStorage.getItem('tel_users_db') || '{}');
+            const users = JSON.parse(localStorage.getItem('controle_users_db') || '{}');
 
             if (users[username]) {
                 showAlert('Este nome de usuário já está cadastrado!');
@@ -413,20 +413,20 @@
                 password
             };
 
-            localStorage.setItem('tel_users_db', JSON.stringify(users));
+            localStorage.setItem('controle_users_db', JSON.stringify(users));
             showAlert('Conta criada com sucesso! Faça seu login.');
             
-            document.getElementById('registerForm').reset();
+            document.gecontroleementById('registerForm').reset();
             switchAuthTab('login');
-            document.getElementById('loginUsername').value = username;
+            document.gecontroleementById('loginUsername').value = username;
         }
 
         function handleLogin(e) {
             e.preventDefault();
-            const username = document.getElementById('loginUsername').value.trim().toLowerCase();
-            const password = document.getElementById('loginPassword').value;
+            const username = document.gecontroleementById('loginUsername').value.trim().toLowerCase();
+            const password = document.gecontroleementById('loginPassword').value;
 
-            const users = JSON.parse(localStorage.getItem('tel_users_db') || '{}');
+            const users = JSON.parse(localStorage.getItem('controle_users_db') || '{}');
             const user = users[username];
 
             if (!user || user.password !== password) {
@@ -439,35 +439,35 @@
                 fullName: user.fullName
             };
 
-            localStorage.setItem('tel_active_session', JSON.stringify(currentUser));
+            localStorage.setItem('controle_active_session', JSON.stringify(currentUser));
             checkSession();
             showAlert(`Bem-vindo, ${user.fullName}!`);
         }
 
         function checkSession() {
-            const session = localStorage.getItem('tel_active_session');
+            const session = localStorage.getItem('controle_active_session');
             if (session) {
                 currentUser = JSON.parse(session);
-                document.getElementById('authScreen').classList.add('hidden');
-                document.getElementById('mainApp').classList.remove('hidden');
-                document.getElementById('userHeaderInfo').classList.remove('hidden');
-                document.getElementById('userHeaderInfo').classList.add('flex');
+                document.gecontroleementById('authScreen').classList.add('hidden');
+                document.gecontroleementById('mainApp').classList.remove('hidden');
+                document.gecontroleementById('userHeaderInfo').classList.remove('hidden');
+                document.gecontroleementById('userHeaderInfo').classList.add('flex');
                 
-                document.getElementById('userNameDisplay').innerText = currentUser.fullName;
-                document.getElementById('userMatriculaDisplay').innerText = `@${currentUser.username}`;
+                document.gecontroleementById('userNameDisplay').innerText = currentUser.fullName;
+                document.gecontroleementById('userMatriculaDisplay').innerText = `@${currentUser.username}`;
 
                 loadUserData();
                 renderServices();
                 updateDailySummary();
             } else {
-                document.getElementById('authScreen').classList.remove('hidden');
-                document.getElementById('mainApp').classList.add('hidden');
-                document.getElementById('userHeaderInfo').classList.add('hidden');
+                document.gecontroleementById('authScreen').classList.remove('hidden');
+                document.gecontroleementById('mainApp').classList.add('hidden');
+                document.gecontroleementById('userHeaderInfo').classList.add('hidden');
             }
         }
 
         function logout() {
-            localStorage.removeItem('tel_active_session');
+            localStorage.removeItem('controle_active_session');
             currentUser = null;
             checkSession();
             showAlert('Sessão encerrada com sucesso.');
@@ -475,8 +475,8 @@
 
         function loadUserData() {
             if (!currentUser) return;
-            const servicesKey = `tel_services_${currentUser.username}`;
-            const recordsKey = `tel_records_${currentUser.username}`;
+            const servicesKey = `controle_services_${currentUser.username}`;
+            const recordsKey = `controle_records_${currentUser.username}`;
 
             const savedServices = localStorage.getItem(servicesKey);
             userServices = savedServices ? JSON.parse(savedServices) : [...DEFAULT_SERVICES];
@@ -487,34 +487,34 @@
 
         function saveUserData() {
             if (!currentUser) return;
-            localStorage.setItem(`tel_services_${currentUser.username}`, JSON.stringify(userServices));
-            localStorage.setItem(`tel_records_${currentUser.username}`, JSON.stringify(userRecords));
+            localStorage.setItem(`controle_services_${currentUser.username}`, JSON.stringify(userServices));
+            localStorage.setItem(`controle_records_${currentUser.username}`, JSON.stringify(userRecords));
         }
 
         function changeDate() {
-            currentDateStr = document.getElementById('selectedDate').value;
+            currentDateStr = document.gecontroleementById('selectedDate').value;
             renderServices();
             updateDailySummary();
         }
 
         function setToday() {
             currentDateStr = new Date().toISOString().split('T')[0];
-            document.getElementById('selectedDate').value = currentDateStr;
+            document.gecontroleementById('selectedDate').value = currentDateStr;
             renderServices();
             updateDailySummary();
         }
 
         function switchTab(tab) {
-            const btnDaily = document.getElementById('tabDaily');
-            const btnCalendar = document.getElementById('tabCalendar');
-            const btnAnalytics = document.getElementById('tabAnalytics');
+            const btnDaily = document.gecontroleementById('tabDaily');
+            const btnCalendar = document.gecontroleementById('tabCalendar');
+            const btnAnalytics = document.gecontroleementById('tabAnalytics');
 
-            const viewDaily = document.getElementById('viewDaily');
-            const viewCalendar = document.getElementById('viewCalendar');
-            const viewAnalytics = document.getElementById('viewAnalytics');
+            const viewDaily = document.gecontroleementById('viewDaily');
+            const viewCalendar = document.gecontroleementById('viewCalendar');
+            const viewAnalytics = document.gecontroleementById('viewAnalytics');
 
             const inactiveClass = "flex-1 md:flex-none px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-slate-600 hover:bg-slate-100 flex items-center justify-center space-x-2 transition";
-            const activeClass = "flex-1 md:flex-none px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center space-x-2 transition bg-tel-navy text-white shadow";
+            const activeClass = "flex-1 md:flex-none px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center space-x-2 transition bg-controle-navy text-white shadow";
 
             btnDaily.className = tab === 'daily' ? activeClass : inactiveClass;
             btnCalendar.className = tab === 'calendar' ? activeClass : inactiveClass;
@@ -533,7 +533,7 @@
         }
 
         function renderServices() {
-            const grid = document.getElementById('servicesGrid');
+            const grid = document.gecontroleementById('servicesGrid');
             grid.innerHTML = '';
 
             const dayRecord = userRecords[currentDateStr] || {};
@@ -542,29 +542,29 @@
                 const count = dayRecord[service.id] || 0;
                 
                 const card = document.createElement('div');
-                card.className = "bg-slate-50 rounded-2xl p-5 border border-slate-200 flex flex-col justify-between hover:border-tel-orange/50 transition shadow-sm";
+                card.className = "bg-slate-50 rounded-2xl p-5 border border-slate-200 flex flex-col justify-between hover:border-controle-orange/50 transition shadow-sm";
                 card.innerHTML = `
                     <div class="flex items-start justify-between">
                         <div class="flex items-center space-x-3">
-                            <div class="p-3 bg-white text-tel-navy rounded-2xl shadow-sm border border-slate-100">
-                                <i data-lucide="${service.icon || 'shield'}" class="w-6 h-6 text-tel-orange"></i>
+                            <div class="p-3 bg-white text-controle-navy rounded-2xl shadow-sm border border-slate-100">
+                                <i data-lucide="${service.icon || 'shield'}" class="w-6 h-6 text-controle-orange"></i>
                             </div>
                             <div>
                                 <h4 class="font-bold text-slate-800 text-sm leading-tight">${service.name}</h4>
                                 <span class="text-[11px] font-medium text-slate-400">Certificação de Serviços</span>
                             </div>
                         </div>
-                        <input type="number" min="0" value="${count}" onchange="setDirectCounter('${service.id}', this.value)" class="w-16 text-center text-xl font-black text-tel-navy bg-white border border-slate-200 rounded-xl py-1 outline-none focus:ring-2 focus:ring-tel-orange">
+                        <input type="number" min="0" value="${count}" onchange="setDirectCounter('${service.id}', this.value)" class="w-16 text-center text-xl font-black text-controle-navy bg-white border border-slate-200 rounded-xl py-1 outline-none focus:ring-2 focus:ring-controle-orange">
                     </div>
 
                     <div class="flex items-center gap-2 mt-5 pt-3 border-t border-slate-200/80">
                         <button onclick="updateCounter('${service.id}', -1)" class="counter-btn flex-1 py-2 bg-white hover:bg-red-50 text-red-600 font-bold rounded-xl border border-slate-200 text-xs flex items-center justify-center">
                             -1
                         </button>
-                        <button onclick="updateCounter('${service.id}', 1)" class="counter-btn flex-1 py-2 bg-tel-navy hover:bg-tel-dark text-white font-bold rounded-xl text-xs flex items-center justify-center shadow">
+                        <button onclick="updateCounter('${service.id}', 1)" class="counter-btn flex-1 py-2 bg-controle-navy hover:bg-controle-dark text-white font-bold rounded-xl text-xs flex items-center justify-center shadow">
                             +1
                         </button>
-                        <button onclick="updateCounter('${service.id}', 5)" class="counter-btn py-2 px-3 bg-tel-orange/10 hover:bg-tel-orange hover:text-white text-tel-orange font-bold rounded-xl text-xs flex items-center justify-center transition">
+                        <button onclick="updateCounter('${service.id}', 5)" class="counter-btn py-2 px-3 bg-controle-orange/10 hover:bg-controle-orange hover:text-white text-controle-orange font-bold rounded-xl text-xs flex items-center justify-center transition">
                             +5
                         </button>
                     </div>
@@ -602,25 +602,25 @@
                 totalCount += (dayRecord[service.id] || 0);
             });
 
-            document.getElementById('dailyTotalCount').innerText = totalCount;
+            document.gecontroleementById('dailyTotalCount').innerText = totalCount;
         }
 
         function toggleCustomServiceModal(show) {
-            const modal = document.getElementById('customModal');
+            const modal = document.gecontroleementById('customModal');
             modal.classList.toggle('hidden', !show);
             modal.classList.toggle('flex', show);
         }
 
         function handleAddCustomService(e) {
             e.preventDefault();
-            const name = document.getElementById('customName').value.trim();
+            const name = document.gecontroleementById('customName').value.trim();
             if (name) {
                 const id = 'custom_' + Date.now();
                 userServices.push({ id, name, icon: 'layers' });
                 saveUserData();
                 renderServices();
                 toggleCustomServiceModal(false);
-                document.getElementById('customServiceForm').reset();
+                document.gecontroleementById('customServiceForm').reset();
                 showAlert('Novo tipo de serviço cadastrado!');
             }
         }
@@ -637,7 +637,7 @@
 
         function exportDayReport() {
             const dayRecord = userRecords[currentDateStr] || {};
-            let text = `TEL TELECOMUNICAÇÕES - RESUMO DE PRODUÇÃO DIÁRIA\n`;
+            let text = `controle controleECOMUNICAÇÕES - RESUMO DE PRODUÇÃO DIÁRIA\n`;
             text += `Certificador: ${currentUser.fullName} (@${currentUser.username})\n`;
             text += `Data: ${currentDateStr}\n`;
             text += `-------------------------------------------\n`;
@@ -662,14 +662,14 @@
         }
 
         function renderCalendar() {
-            const grid = document.getElementById('calendarGrid');
+            const grid = document.gecontroleementById('calendarGrid');
             grid.innerHTML = '';
 
             const year = calendarDate.getFullYear();
             const month = calendarDate.getMonth();
 
             const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
-            document.getElementById('calendarMonthYear').innerText = `${monthNames[month]} ${year}`;
+            document.gecontroleementById('calendarMonthYear').innerText = `${monthNames[month]} ${year}`;
 
             const firstDay = new Date(year, month, 1).getDay();
             const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -694,17 +694,17 @@
                 dayCard.onclick = () => selectDateFromCalendar(dateStr);
 
                 dayCard.className = `h-20 p-2 rounded-xl border transition cursor-pointer flex flex-col justify-between ${
-                    isSelected ? 'border-tel-orange ring-2 ring-tel-orange/30 bg-orange-50/30' : 
-                    isToday ? 'border-tel-navy bg-slate-50' : 'border-slate-200 hover:border-slate-300 bg-white'
+                    isSelected ? 'border-controle-orange ring-2 ring-controle-orange/30 bg-orange-50/30' : 
+                    isToday ? 'border-controle-navy bg-slate-50' : 'border-slate-200 hover:border-slate-300 bg-white'
                 }`;
 
                 dayCard.innerHTML = `
                     <div class="flex justify-between items-center">
-                        <span class="text-xs font-bold ${isToday ? 'text-tel-navy font-black' : 'text-slate-600'}">${day}</span>
-                        ${isToday ? '<span class="text-[9px] bg-tel-navy text-white px-1.5 py-0.5 rounded font-bold">Hoje</span>' : ''}
+                        <span class="text-xs font-bold ${isToday ? 'text-controle-navy font-black' : 'text-slate-600'}">${day}</span>
+                        ${isToday ? '<span class="text-[9px] bg-controle-navy text-white px-1.5 py-0.5 rounded font-bold">Hoje</span>' : ''}
                     </div>
                     ${countSum > 0 ? `
-                        <div class="bg-tel-navy text-white text-center rounded-lg py-1 shadow-sm">
+                        <div class="bg-controle-navy text-white text-center rounded-lg py-1 shadow-sm">
                             <span class="text-xs font-black">${countSum}</span>
                             <span class="text-[8px] block text-slate-300">serviços</span>
                         </div>
@@ -723,7 +723,7 @@
 
         function selectDateFromCalendar(dateStr) {
             currentDateStr = dateStr;
-            document.getElementById('selectedDate').value = currentDateStr;
+            document.gecontroleementById('selectedDate').value = currentDateStr;
             switchTab('daily');
         }
 
@@ -763,9 +763,9 @@
 
             const topServiceObj = userServices.find(s => s.id === topServiceId);
 
-            document.getElementById('monthTotalCount').innerText = totalMonthCount;
-            document.getElementById('monthAvgCount').innerText = avg;
-            document.getElementById('topServiceDisplay').innerText = topServiceObj ? `${topServiceObj.name} (${maxCount})` : 'Nenhum';
+            document.gecontroleementById('monthTotalCount').innerText = totalMonthCount;
+            document.gecontroleementById('monthAvgCount').innerText = avg;
+            document.gecontroleementById('topServiceDisplay').innerText = topServiceObj ? `${topServiceObj.name} (${maxCount})` : 'Nenhum';
         }
 
         function renderAnalytics() {
@@ -789,7 +789,7 @@
                 }
             });
 
-            const tbody = document.getElementById('analyticsTableBody');
+            const tbody = document.gecontroleementById('analyticsTableBody');
             tbody.innerHTML = '';
 
             userServices.forEach(s => {
@@ -800,12 +800,12 @@
                 tr.innerHTML = `
                     <td class="p-3 font-bold text-slate-700">${s.name}</td>
                     <td class="p-3 font-semibold text-slate-600">${count}</td>
-                    <td class="p-3 font-semibold text-tel-orange">${perc}%</td>
+                    <td class="p-3 font-semibold text-controle-orange">${perc}%</td>
                 `;
                 tbody.appendChild(tr);
             });
 
-            const ctx = document.getElementById('analyticsChart').getContext('2d');
+            const ctx = document.gecontroleementById('analyticsChart').getContext('2d');
             if (myChart) myChart.destroy();
 
             myChart = new Chart(ctx, {
